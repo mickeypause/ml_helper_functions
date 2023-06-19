@@ -3,3 +3,4 @@
 ## List of functions: 
   1. Accurcy function
   2. Setup device function
+  3. Download data from link function
