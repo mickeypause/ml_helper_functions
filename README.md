@@ -2,3 +2,4 @@
 
 ## List of functions: 
   1. Accurcy function
+  2. Setup device function
