@@ -28,3 +28,42 @@ def setup_device():
         device = 'cuda' if torch.cuda.is_available() else 'cpu'
     
     return device 
+
+
+
+def download_data(url: str, data_path: str, image_path: str, file_name: str ):
+    """
+    Function witch downloads data from link
+
+    Args: 
+        url: direct url to file 
+        data_path: dir in which should data be placed
+        image_path: complete path to image 
+        file_name: name of download file 
+    """
+
+    import os
+    import zipfile
+    from pathlib import Path
+    import requests
+
+    if image_path.is_dir():
+        print(f"{image_path} directory exists.")
+    else:
+        print(f"Did not find {image_path} directory, creating one...")
+        image_path.mkdir(parents=True, exist_ok=True)
+        zip_path = data_path /file_name
+        
+        with open(zip_path, "wb") as f:
+            request = requests.get(url)
+            print("Downloading data...")
+            f.write(request.content)
+
+        with zipfile.ZipFile(zip_path, "r") as zip_ref:
+            print("Unzipping data...") 
+            zip_ref.extractall(image_path)
+
+        # Remove .zip file
+        os.remove(zip_path)
+    
+    print('Done.')
