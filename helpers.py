@@ -1,4 +1,5 @@
 import torch
+import platform
 
 
 def accuracy_fn(y_true, y_pred):
@@ -17,3 +18,13 @@ def set_seeds(seed: int = 42):
     torch.manual_seed(seed)
     # Set the seed for CUDA torch operations (ones that happen on the GPU)
     torch.cuda.manual_seed(seed)
+ 
+def setup_device():
+    operating_system = platform.system()
+
+    if operating_system == "Darwin":
+        device = 'mps' if torch.backends.mps.is_available() else 'cpu'
+    else: 
+        device = 'cuda' if torch.cuda.is_available() else 'cpu'
+    
+    return device 
